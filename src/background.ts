@@ -23,7 +23,8 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    title: "imPASSable"
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -45,7 +46,7 @@ function createWindow() {
 app.on("window-all-closed", () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== "darwin") {
+  if (process.platform !== "darwin" || process.env.IS_TEST) {
     app.quit();
   }
 });
