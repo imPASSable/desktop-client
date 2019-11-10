@@ -1,22 +1,7 @@
 <template>
   <v-app>
     <v-navigation-drawer v-model="drawer" app clipped mobile-break-point="0">
-      <v-list dense>
-        <v-list-item
-          v-for="item in nav"
-          :key="item.text"
-          link
-          :to="{ name: item.route }"
-          @click.stop="drawer = false"
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <AppMenu :links="mainMenu" @route="drawer = false"></AppMenu>
     </v-navigation-drawer>
 
     <v-app-bar app clipped-left color="primary" dark>
@@ -36,32 +21,23 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import HelloWorld from "./views/HelloWorld.vue";
+import { Vue, Component, Watch } from "vue-property-decorator";
+import { Getter } from "vuex-class";
+import AppMenu from "@/components/AppMenu";
+import { NavigationLink } from "@/model/NavigationLink";
+import { mainMenuProvider } from "@/services/MenuProvider";
 
-export default Vue.extend({
-  name: "App",
-  data: () => {
-    return {
-      drawer: false,
-      nav: [
-        {
-          icon: "mdi-home",
-          text: "Dashboard",
-          route: "home"
-        },
-        {
-          icon: "mdi-information-outline",
-          text: "About",
-          route: "about"
-        },
-        {
-          icon: "mdi-settings",
-          text: "Settings",
-          route: "settings"
-        }
-      ]
-    };
+@Component({
+  components: { AppMenu }
+})
+export default class App extends Vue {
+  @Getter("darkMode", { namespace: "userSettings" }) darkMode!: boolean;
+  drawer: boolean = false;
+  mainMenu: NavigationLink[] = mainMenuProvider();
+
+  @Watch("darkMode")
+  onDarkModeChanged() {
+    this.$vuetify.theme.dark = this.darkMode;
   }
-});
+}
 </script>
