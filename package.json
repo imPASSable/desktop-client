@@ -15,7 +15,6 @@
   },
   "main": "background.js",
   "dependencies": {
-    "@mdi/font": "^3.6.95",
     "core-js": "^3.3.2",
     "roboto-fontface": "*",
     "vue": "^2.6.10",
@@ -27,6 +26,7 @@
     "vuex-class": "latest"
   },
   "devDependencies": {
+    "@mdi/js": "^4.5.95",
     "@types/jest": "^24.0.11",
     "@types/webdriverio": "^4.13.0",
     "@vue/cli-plugin-babel": "^4.0.0",

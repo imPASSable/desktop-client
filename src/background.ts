@@ -1,10 +1,15 @@
 "use strict";
 
-import { app, protocol, BrowserWindow } from "electron";
-import {
-  createProtocol,
-  installVueDevtools
-} from "vue-cli-plugin-electron-builder/lib";
+import { app, protocol, BrowserWindow, ipcMain, dialog } from "electron";
+import { createProtocol, installVueDevtools } from "vue-cli-plugin-electron-builder/lib";
+import { promises as fs } from "fs";
+import os from "os";
+import path from "path";
+
+import { ipcHandle } from "./ipc/main";
+import { CreateDatabaseCall } from "./ipc/database";
+import { LoadUserSettingsCall, StoreUserSettingsCall } from "./ipc/userSettings";
+
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -12,9 +17,7 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 let win: BrowserWindow | null;
 
 // Scheme must be registered before the app is ready
-protocol.registerSchemesAsPrivileged([
-  { scheme: "app", privileges: { secure: true, standard: true } }
-]);
+protocol.registerSchemesAsPrivileged([{ scheme: "app", privileges: { secure: true, standard: true } }]);
 
 function createWindow() {
   // Create the browser window.
@@ -96,3 +99,35 @@ if (isDevelopment) {
     });
   }
 }
+
+// ipc handlers
+
+ipcHandle(CreateDatabaseCall, async (event, payload) => {
+  const dir = payload.path || os.homedir();
+  const name = payload.name || "database";
+  const window = BrowserWindow.fromWebContents(event.sender);
+
+  return await dialog.showSaveDialog(window, {
+    title: "Create database",
+    defaultPath: path.resolve(dir, name + ".ipdb"),
+    filters: [{ name: "imPASSable Database", extensions: ["ipdb"] }]
+  });
+});
+
+ipcHandle(LoadUserSettingsCall, async () => {
+  const file = path.resolve(app.getPath("userData"), "settings.json");
+  const exists = await fs
+    .access(file)
+    .then(() => Promise.resolve(true))
+    .catch(() => Promise.resolve(false));
+  if (!exists) {
+    return {};
+  }
+  const content = await fs.readFile(file, { encoding: "utf-8" });
+  return JSON.parse(content);
+});
+
+ipcHandle(StoreUserSettingsCall, async (event, userSettings) => {
+  const file = path.resolve(app.getPath("userData"), "settings.json");
+  await fs.writeFile(file, JSON.stringify(userSettings));
+});

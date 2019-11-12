@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export interface RootState {}
 
 const store: StoreOptions<RootState> = {
+  strict: process.env.NODE_ENV !== "production",
   modules: {
     userSettings: UserSettingsStoreModule
   }

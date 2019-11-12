@@ -1,3 +1,4 @@
+import { mdiHome, mdiSettings, mdiInformationOutline, mdiDatabasePlus } from "@mdi/js";
 import { NavigationLink } from "@/model/NavigationLink";
 
 export interface MenuProvider {
@@ -5,7 +6,8 @@ export interface MenuProvider {
 }
 
 export const mainMenuProvider: MenuProvider = () => [
-  { icon: "mdi-home", text: "Dashboard", route: "home" },
-  { icon: "mdi-information-outline", text: "About", route: "about" },
-  { icon: "mdi-settings", text: "Settings", route: "settings" }
+  { icon: mdiHome, text: "Dashboard", route: "home" },
+  { icon: mdiDatabasePlus, text: "Create Database", route: "database.create" },
+  { icon: mdiSettings, text: "Settings", route: "settings" },
+  { icon: mdiInformationOutline, text: "About", route: "about" }
 ];

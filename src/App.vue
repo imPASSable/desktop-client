@@ -7,8 +7,8 @@
     <v-app-bar app clipped-left color="primary" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="mr-5 align-center">
-        <span class="title font-weight-light">
-          im<span class="font-weight-medium">PASS</span>able
+        <span class="title">
+          <span class="font-weight-light">im</span>PASS<span class="font-weight-light">able</span>
         </span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -23,7 +23,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from "vue-property-decorator";
 import { Getter } from "vuex-class";
-import AppMenu from "@/components/AppMenu";
+import AppMenu from "@/components/AppMenu.vue";
 import { NavigationLink } from "@/model/NavigationLink";
 import { mainMenuProvider } from "@/services/MenuProvider";
 
@@ -34,6 +34,10 @@ export default class App extends Vue {
   @Getter("darkMode", { namespace: "userSettings" }) darkMode!: boolean;
   drawer: boolean = false;
   mainMenu: NavigationLink[] = mainMenuProvider();
+
+  mounted() {
+    this.onDarkModeChanged();
+  }
 
   @Watch("darkMode")
   onDarkModeChanged() {

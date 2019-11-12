@@ -943,10 +943,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@mdi/font@^3.6.95":
-  version "3.9.97"
-  resolved "https://registry.npm.taobao.org/@mdi/font/download/@mdi/font-3.9.97.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40mdi%2Ffont%2Fdownload%2F%40mdi%2Ffont-3.9.97.tgz#b9f31e05574452e84f57e5b81d34ffd593bc9c29"
-  integrity sha1-ufMeBVdEUuhPV+W4HTT/1ZO8nCk=
+"@mdi/js@^4.5.95":
+  version "4.5.95"
+  resolved "https://registry.yarnpkg.com/@mdi/js/-/js-4.5.95.tgz#f9d12c03b9f848001c82fbdcd1aa445a6c9c8d67"
+  integrity sha512-zQ6LqK/B61/ASwoR26AauCLfNc6u/SyTwsnWF0WLcSIh+oe+A7rQbioYT3eSsQch1gC+1Ejk8YDfD7gDk0FUXg==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
