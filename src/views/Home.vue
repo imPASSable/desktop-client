@@ -1,15 +1,23 @@
 <template>
   <v-container>
-    <h1>Databases</h1>
-    <v-list two-line v-if="databases.length > 0">
+    <v-list v-if="databases.length > 0" two-line subheader>
+      <v-subheader inset>Databases</v-subheader>
+
       <v-list-item v-for="db in databases" :key="db.name" :to="{ name: 'database.view', params: { name: db.name } }">
-        <v-list-item-icon>
+        <v-list-item-avatar>
           <v-icon>{{ icons.mdiDatabase }}</v-icon>
-        </v-list-item-icon>
+        </v-list-item-avatar>
+
         <v-list-item-content>
           <v-list-item-title>{{ db.name }}</v-list-item-title>
           <v-list-item-subtitle>{{ db.path }}</v-list-item-subtitle>
         </v-list-item-content>
+
+        <v-list-item-action>
+          <v-btn icon :to="{ name: 'database.settings', params: { name: db.name } }">
+            <v-icon>{{ icons.mdiSettings }}</v-icon>
+          </v-btn>
+        </v-list-item-action>
       </v-list-item>
     </v-list>
     <v-alert border="left" colored-border type="info" elevation="2" v-else>
@@ -33,7 +41,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { Getter } from "vuex-class";
 import { DatabaseReference } from "@/model/DatabaseReference";
 
-import { mdiDatabase, mdiDatabasePlus, mdiDatabaseImport, mdiDotsVertical, mdiTrashCan } from "@mdi/js";
+import { mdiDatabase, mdiDatabasePlus, mdiDatabaseImport, mdiTrashCan, mdiSettings } from "@mdi/js";
 
 @Component
 export default class Home extends Vue {
@@ -44,8 +52,8 @@ export default class Home extends Vue {
     mdiDatabase,
     mdiDatabasePlus,
     mdiDatabaseImport,
-    mdiDotsVertical,
-    mdiTrashCan
+    mdiTrashCan,
+    mdiSettings
   };
 }
 </script>

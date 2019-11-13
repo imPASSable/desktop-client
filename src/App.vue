@@ -17,23 +17,29 @@
     <v-content>
       <router-view />
     </v-content>
+
+    <AppNotifications />
   </v-app>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from "vue-property-decorator";
+import { Vue, Component, Watch, Provide } from "vue-property-decorator";
 import { Getter } from "vuex-class";
 import AppMenu from "@/components/AppMenu.vue";
 import { NavigationLink } from "@/model/NavigationLink";
 import { mainMenuProvider } from "@/services/MenuProvider";
+import { DefaultEventBus, EventBus } from "@/services/EventBus";
+import AppNotifications from "@/components/AppNotifications.vue";
 
 @Component({
-  components: { AppMenu }
+  components: { AppMenu, AppNotifications }
 })
 export default class App extends Vue {
   @Getter("darkMode", { namespace: "userSettings" }) darkMode!: boolean;
   drawer: boolean = false;
   mainMenu: NavigationLink[] = mainMenuProvider();
+
+  @Provide() eventBus: EventBus = new DefaultEventBus();
 
   mounted() {
     this.onDarkModeChanged();

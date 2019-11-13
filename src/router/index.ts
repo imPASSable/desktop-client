@@ -5,6 +5,7 @@ import Home from "@/views/Home.vue";
 import Settings from "@/views/Settings.vue";
 import CreateDatabase from "@/views/database/CreateDatabase.vue";
 import ViewDatabase from "@/views/database/ViewDatabase.vue";
+import DatabaseSettings from "@/views/database/DatabaseSettings.vue";
 
 Vue.use(VueRouter);
 
@@ -37,6 +38,11 @@ const routes = [
     path: "/database/:name",
     name: "database.view",
     component: ViewDatabase
+  },
+  {
+    path: "/database/:name/settings",
+    name: "database.settings",
+    component: DatabaseSettings
   }
 ];
 

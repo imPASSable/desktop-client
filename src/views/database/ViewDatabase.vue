@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>Database {{ $route.params.name }}</h1>
+    <h1>Database {{ databaseName }}</h1>
   </v-container>
 </template>
 
@@ -8,5 +8,9 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class ViewDatabase extends Vue {}
+export default class ViewDatabase extends Vue {
+  get databaseName(): string {
+    return this.$route.params.name;
+  }
+}
 </script>

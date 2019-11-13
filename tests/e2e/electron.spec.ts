@@ -5,13 +5,14 @@ jest.setTimeout(50000);
 describe("Application launch", () => {
   let server: Server;
 
-  beforeAll(async () => {
+  beforeAll(async done => {
     server = await serverProvider();
+    done();
   });
 
-  beforeEach(() => restartApp(server));
+  beforeEach(async () => await restartApp(server));
 
-  afterAll(() => stopServer(server));
+  afterAll(async () => await stopServer(server));
 
   test("Window Loads Properly", async () => {
     const win = server.app.browserWindow;

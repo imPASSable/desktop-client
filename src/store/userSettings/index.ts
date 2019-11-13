@@ -36,6 +36,10 @@ const mutations: MutationTree<UserSettings> = {
     state.databases.push(dbRef);
     ipcInvoke(StoreUserSettingsCall, state);
   },
+  REMOVE_DATABASE(state, index: number) {
+    state.databases.splice(index, 1);
+    ipcInvoke(StoreUserSettingsCall, state);
+  },
   SET_USER_SETTINGS(state, userSettings: Object) {
     Object.assign(state, userSettings);
   }
@@ -56,6 +60,17 @@ const actions: ActionTree<UserSettings, RootState> = {
       }
 
       commit("ADD_DATABASE", dbRef);
+      resolve();
+    });
+  },
+  removeDatabase({ commit, state }, name: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const index = state.databases.findIndex(db => db.name === name);
+      if (index === -1) {
+        reject(`Database with name '${name}' is not registered`);
+      }
+
+      commit("REMOVE_DATABASE", index);
       resolve();
     });
   },

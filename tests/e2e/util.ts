@@ -1,16 +1,11 @@
-import path from "path";
-import { Application } from "spectron";
-import electron from "electron";
 import { Server, testWithSpectron } from "vue-cli-plugin-electron-builder";
 
 interface ServerProvider {
   (): Promise<Server>;
 }
 
-export const serverProvider: ServerProvider = async () => {
-  // @ts-ignore
-  return await testWithSpectron({ noStart: true });
-};
+// @ts-ignore
+export const serverProvider: ServerProvider = () => testWithSpectron({ noStart: true });
 
 export const restartApp: (server: Server) => Promise<void> = async server => {
   if (server.app.isRunning()) {
