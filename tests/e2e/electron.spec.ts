@@ -10,9 +10,15 @@ describe("Application launch", () => {
     done();
   });
 
-  beforeEach(async () => await restartApp(server));
+  beforeEach(async done => {
+    await restartApp(server);
+    done();
+  });
 
-  afterAll(async () => await stopServer(server));
+  afterAll(async done => {
+    await stopServer(server);
+    done();
+  });
 
   test("Window Loads Properly", async () => {
     const win = server.app.browserWindow;

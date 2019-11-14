@@ -17,9 +17,9 @@
       "vuetify"
     ],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "~/*": ["src/app/*"],
+      "~common/*": ["src/common/*"],
+      "~electron/*": ["src/electron/*"]
     },
     "lib": [
       "esnext",
