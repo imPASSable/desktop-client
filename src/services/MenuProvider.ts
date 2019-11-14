@@ -6,8 +6,8 @@ export interface MenuProvider {
 }
 
 export const mainMenuProvider: MenuProvider = () => [
-  { icon: mdiHome, text: "Dashboard", route: "home" },
+  { icon: mdiHome, text: "Dashboard", route: "home", divider: true },
   { icon: mdiDatabasePlus, text: "Create Database", route: "database.create" },
-  { icon: mdiSettings, text: "Settings", route: "settings" },
+  { icon: mdiSettings, text: "Settings", route: "settings", divider: true },
   { icon: mdiInformationOutline, text: "About", route: "about" }
 ];

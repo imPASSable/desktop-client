@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app clipped mobile-break-point="0">
-      <AppMenu :links="mainMenu" @route="drawer = false"></AppMenu>
+    <v-navigation-drawer permanent app clipped mobile-break-point="0">
+      <AppMenu :links="mainMenu"></AppMenu>
     </v-navigation-drawer>
 
     <v-app-bar app clipped-left color="primary" dark>
@@ -36,7 +36,6 @@ import AppNotifications from "@/components/AppNotifications.vue";
 })
 export default class App extends Vue {
   @Getter("darkMode", { namespace: "userSettings" }) darkMode!: boolean;
-  drawer: boolean = false;
   mainMenu: NavigationLink[] = mainMenuProvider();
 
   @Provide() eventBus: EventBus = new DefaultEventBus();

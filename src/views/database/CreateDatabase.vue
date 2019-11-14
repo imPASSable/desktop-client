@@ -2,12 +2,12 @@
   <v-container>
     <h1>Create new database</h1>
 
-    <v-form ref="form">
+    <v-form ref="form" @submit="submit">
       <v-text-field v-model="databaseName" outlined label="Name" :rules="validators.name" />
       <v-text-field v-model="password" type="password" outlined label="Password" :rules="validators.password" />
       <v-text-field v-model="repeat" type="password" outlined label="Repeat password" :rules="validators.repeat" />
 
-      <v-btn large color="success" class="mr-4" @click="submit">Save</v-btn>
+      <v-btn type="submit" large color="success" class="mr-4">Save</v-btn>
       <v-btn large color="error" class="mr-4" :to="{ name: 'home' }">Cancel</v-btn>
     </v-form>
   </v-container>
