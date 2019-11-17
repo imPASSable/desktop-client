@@ -1,6 +1,7 @@
 "use strict";
 
-import { app, protocol, BrowserWindow } from "electron";
+import { app, ipcMain, protocol, BrowserWindow } from "electron";
+import path from "path";
 import { createProtocol, installVueDevtools } from "vue-cli-plugin-electron-builder/lib";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -18,8 +19,9 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: false
+      nodeIntegration: false,
+      enableRemoteModule: false,
+      preload: path.resolve(__dirname, "preload.js")
     },
     title: "imPASSable"
   });
@@ -94,3 +96,7 @@ if (isDevelopment) {
 }
 
 import "~electron/ipcHandlers";
+
+ipcMain.once("getAppPath", event => {
+  event.returnValue = app.getAppPath();
+});

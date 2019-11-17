@@ -1,3 +1,5 @@
+window.sourceMapSupport.install();
+
 import Vue from "vue";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 

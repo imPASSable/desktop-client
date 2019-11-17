@@ -17,6 +17,10 @@ module.exports = {
       chainWebpackMainProcess: config => {
         config.resolve.alias.set("~common", path.join(__dirname, "./src/common"));
         config.resolve.alias.set("~electron", path.join(__dirname, "./src/electron"));
+        config.entry("preload").add("~electron/preload");
+      },
+      chainWebpackRendererProcess: config => {
+        config.target("web");
       },
       mainProcessFile: "src/electron/background.ts",
       mainProcessWatch: ["src/electron/**/*.ts"]
