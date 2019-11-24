@@ -1,15 +1,18 @@
-import { ipcMain, IpcMainInvokeEvent } from "electron";
+import { ipcMain, IpcMainInvokeEvent, WebContents } from "electron";
 
-import { IpcCall } from "~common/ipc";
+import { IpcCall, IpcEvent } from "~common/ipc";
 
-export interface IpcCallHandler<P, R> {
-  (event: IpcMainInvokeEvent, payload: P): Promise<R> | R;
+export function ipcHandle<P, R>(
+  call: IpcCall<P, R>,
+  handler: (payload: P, event: IpcMainInvokeEvent) => Promise<R> | R
+): void {
+  ipcMain.handle(call.name, (event, payload) => handler(payload, event));
 }
 
-export function ipcHandle<P, R>(call: IpcCall<P, R>, handler: IpcCallHandler<P, R>): void {
-  ipcMain.handle(call.name, handler);
-}
-
-export function ipcRemoveHandler<P>(call: IpcCall<P, any>): void {
+export function ipcRemoveHandler<P, R>(call: IpcCall<P, R>): void {
   ipcMain.removeHandler(call.name);
+}
+
+export function ipcDispatch<E>(webContents: WebContents, eventType: IpcEvent<E>, event: E) {
+  webContents.send(eventType.name, event);
 }

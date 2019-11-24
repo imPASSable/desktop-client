@@ -1,5 +1,7 @@
-export interface EmptyPayload {}
+export interface IpcCall<P = void, R = void> {
+  name: string;
+}
 
-export interface IpcCall<P = EmptyPayload, R = void> {
+export interface IpcEvent<E = void> {
   name: string;
 }

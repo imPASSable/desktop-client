@@ -3,7 +3,7 @@
     <v-list v-if="databases.length > 0" two-line subheader>
       <v-subheader inset>Databases</v-subheader>
 
-      <v-list-item v-for="db in databases" :key="db.name" :to="{ name: 'database.view', params: { name: db.name } }">
+      <v-list-item v-for="db in databases" :key="db.name" @click="onOpenDatabase(db)">
         <v-list-item-avatar>
           <v-icon>{{ icons.mdiDatabase }}</v-icon>
         </v-list-item-avatar>
@@ -37,16 +37,24 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { Getter } from "vuex-class";
+import { Component, Inject, Vue } from "vue-property-decorator";
+import { Action, Getter } from "vuex-class";
 import { mdiDatabase, mdiDatabasePlus, mdiDatabaseImport, mdiTrashCan, mdiSettings } from "@mdi/js";
 
 import { DatabaseReference } from "~common/model/DatabaseReference";
 
+import { NotificationEvent } from "~/events/Notification";
+import { EventBus } from "~/services/EventBus";
+
 @Component
 export default class Home extends Vue {
+  @Inject() eventBus!: EventBus;
+
   @Getter("databases", { namespace: "userSettings" })
   databases!: DatabaseReference[];
+
+  @Action("openDatabase", { namespace: "database" })
+  openDatabase!: (ref: DatabaseReference) => Promise<void>;
 
   icons = {
     mdiDatabase,
@@ -55,5 +63,18 @@ export default class Home extends Vue {
     mdiTrashCan,
     mdiSettings
   };
+
+  onOpenDatabase(ref: DatabaseReference) {
+    this.openDatabase(ref)
+      .then(() => {
+        this.$router.push({ name: "database.view", params: { name: ref.name } });
+      })
+      .catch(() => {
+        this.eventBus.dispatch(NotificationEvent, {
+          type: "error",
+          message: `Couldn't open database <strong>${name}</strong>`
+        });
+      });
+  }
 }
 </script>

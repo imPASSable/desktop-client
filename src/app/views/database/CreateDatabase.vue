@@ -51,9 +51,11 @@ export default class CreateDatabase extends Vue {
     if (this.$refs.form.validate()) {
       databaseService
         .create(this.databaseName, this.lastPath)
-        .then((path: string) => {
-          return this.addDatabase({ name: this.databaseName, path });
+        .then(path => {
+          const ref: DatabaseReference = { name: this.databaseName, path };
+          return databaseService.save(ref, databaseService.createEmpty()).then(() => ref);
         })
+        .then(this.addDatabase)
         .then(() => {
           this.$router.push({ name: "database.view", params: { name: this.databaseName } });
         })

@@ -7,12 +7,6 @@ import { LoadUserSettingsCall, StoreUserSettingsCall } from "~common/ipc/userSet
 import { ipcInvoke } from "~/services/ipc";
 import { RootState } from "~/store";
 
-const defaultUserSettings = {
-  darkMode: false,
-  lastPath: undefined,
-  databases: []
-};
-
 const getters: GetterTree<UserSettings, RootState> = {
   darkMode(state): boolean {
     return state.darkMode;
@@ -85,7 +79,11 @@ const actions: ActionTree<UserSettings, RootState> = {
 
 export const UserSettingsStoreModule: Module<UserSettings, RootState> = {
   namespaced: true,
-  state: () => ({ ...defaultUserSettings }),
+  state: {
+    darkMode: false,
+    lastPath: undefined,
+    databases: []
+  },
   getters,
   actions,
   mutations

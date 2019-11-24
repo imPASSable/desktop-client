@@ -1,6 +1,6 @@
 "use strict";
 
-import { app, ipcMain, protocol, BrowserWindow } from "electron";
+import { app, ipcMain, protocol, BrowserWindow, Menu } from "electron";
 import path from "path";
 import { createProtocol, installVueDevtools } from "vue-cli-plugin-electron-builder/lib";
 
@@ -94,6 +94,10 @@ if (isDevelopment) {
     });
   }
 }
+
+import { createMenu } from "~electron/menu";
+const menu: Menu = createMenu();
+Menu.setApplicationMenu(menu);
 
 import "~electron/ipcHandlers";
 

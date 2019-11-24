@@ -1,7 +1,7 @@
 import { IpcCall } from "~common/ipc";
 import { UserSettings } from "~common/model/UserSettings";
 
-export const LoadUserSettingsCall: IpcCall<void, Object> = {
+export const LoadUserSettingsCall: IpcCall<void, UserSettings> = {
   name: "userSettings.load"
 };
 
