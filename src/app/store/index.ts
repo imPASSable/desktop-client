@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex, { StoreOptions } from "vuex";
 
-import { DatabaseStoreModule } from "~/store/database";
-import { UserSettingsStoreModule } from "~/store/userSettings";
+import { DatabaseStoreModule } from "~/store/modules/database";
+import { UserSettingsStoreModule } from "~/store/modules/userSettings";
 
 Vue.use(Vuex);
 

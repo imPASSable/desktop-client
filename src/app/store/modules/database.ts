@@ -6,13 +6,13 @@ import { DatabaseReference } from "~common/model/DatabaseReference";
 import { RootState } from "~/store";
 import { databaseService } from "~/services/DatabaseService";
 
+interface DatabaseRecord {
+  db: Database;
+  changed: boolean;
+}
+
 interface DatabaseStoreState {
-  databases: {
-    [name: string]: {
-      db: Database;
-      changed: boolean;
-    };
-  };
+  databases: Record<string, DatabaseRecord>;
 }
 
 const state: DatabaseStoreState = {

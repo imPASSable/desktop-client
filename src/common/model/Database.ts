@@ -1,5 +1,7 @@
 export type SecretIdentifier = string;
 
+export type SecretUri = string;
+
 export interface Secret {
   id: SecretIdentifier;
   name: string;
@@ -8,15 +10,17 @@ export interface Secret {
   note?: string;
 }
 
-export interface UsernamePasswordSecret extends Secret {
-  username: string;
-  password: string;
-  url?: string;
+interface SecretWithUri extends Secret {
+  uri?: SecretUri;
 }
 
-export interface TokenSecret extends Secret {
+export interface UsernamePasswordSecret extends SecretWithUri {
+  username: string;
+  password: string;
+}
+
+export interface TokenSecret extends SecretWithUri {
   token: string;
-  url?: string;
 }
 
 export interface GroupSecret extends Secret {
